@@ -1,22 +1,34 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+const NotAuthorized = () => import('../views/NotAuthorized');
+const MainScreen = () => import('../views/MainScreen');
+const MainScreenList = () => import('../components/MainScreen/MainScreenList');
+const MainScreenRefillBalance = () => import('../components/MainScreen/MainScreenRefillBalance');
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: Home
+    name: 'Authorization',
+    component: NotAuthorized
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/list',
+    component: MainScreen,
+    children: [
+      {
+        path: '',
+        component: MainScreenList,
+        name: 'list',
+        
+      },
+      {
+        path: 'refill',
+        component: MainScreenRefillBalance,
+        name: 'RefillBalance',
+      },
+    ]
   }
 ]
 
